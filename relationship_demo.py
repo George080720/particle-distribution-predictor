@@ -11,8 +11,8 @@ st.write("输入 DP（聚合度）和 Ca²⁺ 浓度，预测综合指数。")
 # ========== 1. 读数据 + 训练模型（去掉缓存） ==========
 df = pd.read_csv("relationship.csv")
 
-X = df[['DP', '钙离子浓度 (mM)']].values
-y = df['综合指数'].values
+X = df[['DP', 'Ca²⁺ concentration (mM)']].values
+y = df['Composite Index'].values
 
 model = RandomForestRegressor(n_estimators=100, random_state=42)
 model.fit(X, y)
@@ -52,8 +52,8 @@ with col2:
 st.subheader("特征重要性")
 importance = model.feature_importances_
 fig, ax = plt.subplots()
-ax.barh(['DP', 'Ca²⁺ 浓度'], importance, color=['steelblue', 'coral'])
-ax.set_xlabel('重要性')
+ax.barh(['DP', 'Ca²⁺ concentration (mM)'], importance, color=['steelblue', 'coral'])
+ax.set_xlabel('importance')
 ax.set_xlim(0, 1)
 for i, v in enumerate(importance):
     ax.text(v + 0.01, i, f"{v:.3f}", va='center')
@@ -76,9 +76,9 @@ ax2.set_xticks(range(len(ca_range)))
 ax2.set_xticklabels(ca_range)
 ax2.set_yticks(range(len(dp_range)))
 ax2.set_yticklabels(dp_range)
-ax2.set_xlabel("Ca²⁺ 浓度 (mM)")
+ax2.set_xlabel("Ca²⁺ concentration (mM)")
 ax2.set_ylabel("DP（聚合度）")
-plt.colorbar(im, ax=ax2, label="综合指数")
+plt.colorbar(im, ax=ax2, label="Composite Index")
 
 for i in range(len(dp_range)):
     for j in range(len(ca_range)):
